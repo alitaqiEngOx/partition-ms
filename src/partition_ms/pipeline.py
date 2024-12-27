@@ -10,7 +10,7 @@ def break_by_snapshots(
     """
     """
     copytree(f"{msin}", f"{msout}")
-    ms = table(f"{msout}")
+    ms = table(f"{msout}", readonly=False)
 
     for name in ms.colnames():
         try:
