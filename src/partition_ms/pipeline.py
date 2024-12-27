@@ -1,19 +1,19 @@
 from pathlib import Path
+from shutil import copytree
 
 from casacore.tables import table
 
 
 def break_by_snapshots(
-        msin_dir: Path, msout_dir: Path, range: list[int]
+        msin: Path, msout: Path, range: list[int]
 ) -> None:
     """
     """
-    msin = table(f"{msin_dir.absolute()}")
+    copytree(f"{msin}", f"{msout}")
+    ms = table(f"{msout}")
 
-    for name in msin.colnames():
+    for name in ms.colnames():
         try:
-            col = msin.getcol(name)
+            col = ms.getcol(name)
         except:
-            continue
-
-    
+            continue 
