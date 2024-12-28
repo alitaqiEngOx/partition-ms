@@ -16,4 +16,8 @@ def break_by_snapshots(
         try:
             col = ms.getcol(name)
         except:
-            continue 
+            continue
+
+        ms.putcol(name, col[range[0]:range[1]])
+
+    ms.close()
