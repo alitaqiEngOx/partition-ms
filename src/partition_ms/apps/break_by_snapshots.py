@@ -1,5 +1,8 @@
 import argparse
 import sys
+from pathlib import Path
+
+from ..pipeline import break_by_snapshots
 
 
 def main() -> int:
@@ -7,6 +10,10 @@ def main() -> int:
     Pipeline entry point.
     """
     args = parse_args()
+
+    break_by_snapshots(
+        Path(args.msin), Path(args.msout), args.range
+    )
 
     return 0
 
