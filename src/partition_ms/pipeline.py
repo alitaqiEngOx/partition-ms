@@ -9,8 +9,8 @@ def break_by_snapshots(
     """
     """
     tableutil.tablecopy(f"{msin_dir}", f"{msout_dir}", copynorows=True)
-    msin = table(f"{msin_dir}")
-    msout = table(f"{msout_dir}", readonly=False)
+    msin = table(f"{msin_dir}", ack=False)
+    msout = table(f"{msout_dir}", ack=False, readonly=False)
     msout.addrows(filter[1]-filter[0])
 
     for colname in msin.colnames():
@@ -22,7 +22,7 @@ def break_by_snapshots(
             continue
 
         msout.putcol(colname, coldata[filter[0]:filter[1]])
-        print(f"colname={colname}")
+        print(f"copied={colname}")
 
     msin.close()
     msout.close()
