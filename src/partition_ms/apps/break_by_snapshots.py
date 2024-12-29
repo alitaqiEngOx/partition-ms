@@ -2,7 +2,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from break_by_snapshots.pipeline import break_by_snapshots
+from partition_ms.pipeline import break_by_snapshots
 
 
 def main() -> int:

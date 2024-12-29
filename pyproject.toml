@@ -1,7 +1,7 @@
 [tool.poetry]
 authors = ["A. Taqi"]
 description = "partition a MeasurementSet v2"
-name = "partition-ms"
+name = "partition_ms"
 repository = "https://github.com/alitaqiEngOx/partition-ms"
 version = "0.1.0"
 
@@ -10,7 +10,7 @@ build-backend = "poetry.core.masonry.api"
 required = ["poetry-core>=1.0.0"]
 
 [tool.poetry.scripts]
-break_by_snapshots = "partition_ms.apps.break_by_snapshots:main"
+break-by-snapshots = "partition_ms.apps.break_by_snapshots:main"
 
 [tool.poetry.dependencies]
 python = ">=3.10, <3.12"
