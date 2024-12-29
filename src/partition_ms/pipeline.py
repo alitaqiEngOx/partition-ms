@@ -1,10 +1,12 @@
+from logging import Logger
 from pathlib import Path
 
 from casacore.tables import table, tableutil
 
 
 def break_by_snapshots(
-        msin_dir: Path, msout_dir: Path, filter: list[int]
+        msin_dir: Path, msout_dir: Path, filter: list[int],
+        *, logger: Logger
 ) -> None:
     """
     """
