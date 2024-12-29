@@ -16,7 +16,8 @@ def main() -> int:
     )
 
     break_by_snapshots(
-        Path(args.msin), Path(args.msout), args.range
+        Path(args.msin), Path(args.msout), args.range,
+        logger=logger
     )
 
     return 0
