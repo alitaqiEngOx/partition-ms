@@ -3,6 +3,7 @@ import sys
 from pathlib import Path
 
 from partition_ms.pipeline import break_by_snapshots
+from partition_ms.utils import log_handler
 
 
 def main() -> int:
@@ -10,6 +11,9 @@ def main() -> int:
     Pipeline entry point.
     """
     args = parse_args()
+    logger = log_handler.generate(
+        "Partition MS", cmd_logs=args.cmd_logs
+    )
 
     break_by_snapshots(
         Path(args.msin), Path(args.msout), args.range
@@ -24,6 +28,11 @@ def parse_args() -> argparse.Namespace:
 
     cmd Arguments
     -------------
+    --cmd_logs (optional): None
+      raising this flag will prompt the pipeline to output
+      logs on the command line in addition to logging into a
+      logfile.
+
     msin: str
         input MeasurementSet v2 directory.
 
@@ -39,6 +48,11 @@ def parse_args() -> argparse.Namespace:
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
 
+    parser.add_argument(
+        "--cmd_logs",
+        action="store_true",
+        help="Generates detailed logs on the command line"
+    )
     parser.add_argument(
         "msin",
         type=str,
