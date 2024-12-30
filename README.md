@@ -1,5 +1,6 @@
 # Partition MS
-Truncate a radio astronomy MeasurementSet v2 dow to the required number of snapshots. This project is under active development.
+Truncate a radio astronomy MeasurementSet v2 down to the required number of snapshots.<br />
+This project is under active development.
 
 ## Installation
 1- Clone this repository;<br />
