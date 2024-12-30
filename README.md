@@ -8,7 +8,7 @@ Truncate a radio astronomy MeasurementSet v2 dow to the required number of snaps
 ```
 $ pip3 install poetry
 ```
-4- navigate to the parent directory of your copy of this directory;<br />
+4- navigate to the parent directory of your copy of this repository;<br />
 5- install the package using `poetry`:
 ```
 $ poetry install
