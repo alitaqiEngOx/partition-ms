@@ -1,7 +1,7 @@
 from logging import Logger
 from pathlib import Path
 
-from casacore.tables import table, tableutil
+from casacore.tables import table
 
 
 def break_by_snapshots(
@@ -10,10 +10,8 @@ def break_by_snapshots(
 ) -> None:
     """
     """
-    #tableutil.tablecopy(f"{msin_dir}", f"{msout_dir}", copynorows=True)
-
     # main table
-    #print("MAIN.....")
+    print("MAIN.....")
     msin = table(f"{msin_dir}", ack=False)
     msin.copy(f"{msout_dir}", deep=True, copynorows=True)
 
@@ -24,8 +22,8 @@ def break_by_snapshots(
         try:
             coldata = msin.getcol(colname)
 
-        except:
-            print(f"skipping={colname}")
+        except Exception as e:
+            print(f"skipping={colname}: {e}")
             continue
 
         msout.putcol(colname, coldata[filter[0]:filter[1]])
@@ -34,33 +32,27 @@ def break_by_snapshots(
     msin.close()
     msout.close()
 
-    for tblname in [
-        "ANTENNA", "DATA_DESCRIPTION", "DOPPLER", "FEED", 
-        "FIELD", "FLAG_CMD", "FREQ_OFFSET", "HISTORY", 
-        "OBSERVATION", "POINTING", "PLOARIZATION", 
-        "PROCESSOR", "SOURCE", "SPECTRAL_WINDOW", 
-        "STATE", "SYSCAL", "WEATHER"
-    ]:
-        if msout_dir.joinpath(tblname).exists():
-            print(f"{tblname}.....")
-            msin = table(f"{msin_dir.joinpath(tblname)}", ack=False)
-            msout = table(f"{msout_dir.joinpath(tblname)}", ack=False, readonly=False)
-            msout.addrows(msin.nrows())
+    # all other tables
+    tblnames = [
+        tbl.name for tbl in msout_dir.iterdir() if tbl.is_dir()
+    ]
 
-            for colname in msin.colnames():
-                try:
-                    coldata = msin.getcol(colname)
+    for tblname in tblnames:
+        print(f"\n{tblname}.....")
+        msin = table(f"{msin_dir.joinpath(tblname)}", ack=False)
+        msout = table(f"{msout_dir.joinpath(tblname)}", ack=False, readonly=False)
+        msout.addrows(msin.nrows())
 
-                except:
-                    print(f"skipping={colname}")
-                    continue
+        for colname in msin.colnames():
+            try:
+                coldata = msin.getcol(colname)
 
-                msout.putcol(colname, coldata)
-                print(f"copied={colname}")
+            except Exception as e:
+                print(f"skipping={colname}: {e}")
+                continue
 
-            msin.close()
-            msout.close()
+            msout.putcol(colname, coldata)
+            print(f"copied={colname}")
 
-        else:
-            print(f"Table {tblname} does not exist - skipping")
-            continue
+        msin.close()
+        msout.close()
