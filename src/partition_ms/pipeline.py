@@ -26,8 +26,10 @@ def break_by_snapshots(
             msout.addrows(filter[1]-filter[0])
 
         else:
-            logger.info(f"   All {msin.nrows()} row(s)\n  |")
             msin = table(f"{msin_dir.joinpath(tblname)}", ack=False)
+
+            logger.info(f"   All {msin.nrows()} row(s)\n  |")
+
             msout = table(f"{msout_dir.joinpath(tblname)}", ack=False, readonly=False)
             msout.addrows(msin.nrows())
 
@@ -35,7 +37,7 @@ def break_by_snapshots(
             try:
                 coldata = msin.getcol(colname)
             except Exception as e:
-                logger.warning(f"Error in copying {colname} column, skipping")
+                logger.warning(f"Error in copying {colname} column; skipping")
                 continue
 
             if tblname == "MAIN":
