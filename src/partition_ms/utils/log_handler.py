@@ -27,10 +27,11 @@ def generate(
     """
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
-    
-    log_folder_name = datetime.now().strftime(
+
+    log_folder_name = f"partition-ms_logs" + datetime.now().strftime(
         "%Y-%m-%d_%H-%M-%S"
     )
+
     Path.cwd().joinpath(
         log_folder_name
     ).mkdir(parents=True, exist_ok=True)
