@@ -18,8 +18,9 @@ $ poetry install
 ## Usage
 Once installed, the general usage is as follows:
 ```
-$ break-by-snapshots {msin} {msout} {start_row} {finish_row}
+$ break-by-snapshots [--cmd_logs] {msin} {msout} {start_row} {finish_row}
 ```
+`cmd_logs`: raise this flag to stream logs on the command line in addition to the default `logfile.log` to be generated.
 `msin` = your input MeasurementSet v2 directory;<br />
 `msout` = directory and name for your truncated MeasurementSet v2 output;<br />
 `start_row` = index of the first snapshot row to be copied over;<br />
