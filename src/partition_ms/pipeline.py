@@ -26,13 +26,12 @@ def break_by_snapshots(
             msout.addrows(filter[1]-filter[0])
 
         else:
+            logger.info(f"   All {msin.nrows()} row(s)\n  |")
             msin = table(f"{msin_dir.joinpath(tblname)}", ack=False)
             msout = table(f"{msout_dir.joinpath(tblname)}", ack=False, readonly=False)
             msout.addrows(msin.nrows())
 
         for colname in msin.colnames():
-            if tblname != "MAIN":
-                logger.info(f"   All {msin.nrows()} row(s)\n  |")
             try:
                 coldata = msin.getcol(colname)
             except Exception as e:
