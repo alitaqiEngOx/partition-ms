@@ -25,4 +25,4 @@ $ break-by-snapshots [--cmd_logs] {msin} {msout} {start_row} {finish_row}
 `start_row` = index of the first snapshot row to be copied over;<br />
 `finish_row` = index of the snapshot row after the final one to be copied over.
 
-`--cmd_logs`: raise this optional flag to stream logs on the command line in addition to the default `logfile.log` to be generated.
+`--cmd_logs`: raise this optional flag to stream logs on the CLI in addition to the default `logfile.log` to be generated.
