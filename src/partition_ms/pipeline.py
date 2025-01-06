@@ -17,10 +17,10 @@ def break_by_snapshots(
     ]
 
     for tblname in tblnames:
-        logger.info(f"Copying {tblname} table...")
+        logger.info(f"   Copying {tblname} table...")
 
         if tblname == "MAIN":
-            logger.info(f"Only rows {filter[0]}-{filter[1]} out of {msin.nrows()}\n  |")
+            logger.info(f"   Only rows {filter[0]}-{filter[1]} out of {msin.nrows()}\n  |")
 
             msout = table(f"{msout_dir}", ack=False, readonly=False)
             msout.addrows(filter[1]-filter[0])
@@ -31,10 +31,12 @@ def break_by_snapshots(
             msout.addrows(msin.nrows())
 
         for colname in msin.colnames():
+            if tblname != "MAIN":
+                logger.info(f"   All {msin.nrows()} row(s)\n  |")
             try:
                 coldata = msin.getcol(colname)
             except Exception as e:
-                logger.warning(f"Skipping {colname} column")
+                logger.warning(f"Error in copying {colname} column, skipping")
                 continue
 
             if tblname == "MAIN":
@@ -43,9 +45,9 @@ def break_by_snapshots(
                 msout.putcol(colname, coldata)
 
             if colname == msin.colnames()[-1]:
-                logger.info(f"Copied {colname} column\n  |")
+                logger.info(f"   Copied {colname} column\n  |")
             else:
-                logger.info(f"Copied {colname} column")
+                logger.info(f"   Copied {colname} column")
 
         msin.close()
         msout.close()
