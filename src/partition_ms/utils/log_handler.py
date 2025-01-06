@@ -1,4 +1,3 @@
-import contextlib
 import logging
 import sys
 from datetime import datetime
@@ -78,23 +77,3 @@ def exit_pipeline(
     else:
         logger.info("Pipeline run - FAILURE")
     sys.exit()
-
-def enable_logs_manually() -> None:
-    """
-    Reverts the logging premission to default
-    (i.e., logging.NOTSET). Useful where logging
-    is temporarily blocked via a context manager
-    but an exception occurs while executing.
-    """
-    logging.disable(logging.NOTSET)
-
-@contextlib.contextmanager
-def temporary_log_disable():
-    """
-    Context manager to disable logging while
-    running a piece of code, and subsequently
-    reverting to default behaviour.
-    """
-    logging.disable(logging.CRITICAL)
-    yield
-    enable_logs_manually()
